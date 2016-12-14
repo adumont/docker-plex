@@ -7,7 +7,7 @@ RUN sed -i -e '/^deb-src/ s/^/#/' /etc/apt/sources.list && \
    apt-get -qy update && \
    apt-get -qy dist-upgrade && \
    apt-get install -y --force-yes wget && \
-   URL=$( wget -q http://plex.tv/downloads -O - | grep _amd64.deb | sed -e "s#^.*<a href=\"##;s#_amd64.deb.*\$#_amd64.deb#;s#https:#http:#"  | grep plexmediaserver_ ) && \
+   URL=https://downloads.plex.tv/plex-media-server/1.1.4.2757-24ffd60/plexmediaserver_1.1.4.2757-24ffd60_amd64.deb && \
    wget -q -O plex.deb $URL && \
    dpkg -i plex.deb && \
    rm plex.deb && \
