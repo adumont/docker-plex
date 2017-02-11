@@ -3,19 +3,18 @@ MAINTAINER Alexandre Dumont <adumont@gmail.com>
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+COPY root/ /
+
 RUN sed -i -e '/^deb-src/ s/^/#/' /etc/apt/sources.list && \
    apt-get -qy update && \
    apt-get -qy dist-upgrade && \
-   apt-get install -y --force-yes wget && \
-   URL=https://downloads.plex.tv/plex-media-server/1.3.3.3148-b38628e/plexmediaserver_1.3.3.3148-b38628e_amd64.deb && \
-   wget -q -O plex.deb $URL && \
-   dpkg -i plex.deb && \
-   rm plex.deb && \
-   apt-get -y autoremove --purge wget && \
+   apt-get install -y --force-yes curl && \
+   /installBinary.sh && \
+   apt-get -y autoremove --purge curl && \
    apt-get -y autoremove --purge && \
    apt-get -y clean && \
    rm -rf /var/lib/apt/lists/* && \
-   rm -rf /tmp/* && \
+   rm -rf /tmp/* /var/tmp/* && \
    sed -i -e 's#^plex:.*$#plex:x:1001:#' /etc/group && \
    sed -i -e 's#^plex:.*$#plex:x:1001:1001::/var/lib/plexmediaserver:/bin/bash#' /etc/passwd
 
